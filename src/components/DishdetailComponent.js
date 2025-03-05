@@ -24,34 +24,33 @@ function RenderDish({ dish }) {
 
 // RenderComments component - Displays the comments for a dish
 function RenderComments({ comments }) {
-    if (comments == null) {
-        return (<div></div>)
+    if (!comments || comments.length === 0) {  // Check if comments exist
+        return <div><h4>Comments</h4><p>No comments available.</p></div>;
     }
-    const cmnts = comments.map(comment => {
-        return (
-            
-            <li key={comment.id}>
-                <p>{comment.comment}</p>
-                <p>-- {comment.author},
-                    &nbsp;
-                    {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))} </p>
-            </li>
-        )
-    })
+
     return (
-        <div className='col-12 col-md-5 m-1'>
-            <Card>
+        <div>
             <h4> Comments </h4>
-            <ul className='list-unstyled'>
-                {cmnts}
-            </ul>
+            <Card>
+                <ul className="list-unstyled">
+                    {comments.map(comment => (
+                        <li key={comment.id}>
+                            <p>{comment.comment}</p>
+                            <p>-- {comment.author}, 
+                                {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(comment.date))}
+                            </p>
+                        </li>
+                    ))}
+                </ul>
             </Card>
         </div>
-    )
+    );
 }
 
 // DishDetail component - Main component that renders both the dish and its comments
 const DishDetail = (props) => {
+    console.log("Dishdetail received comments:", props.comments);
+
     const dish = props.dish;
     if(dish==null){
         return (<div></div>);
@@ -60,20 +59,16 @@ const DishDetail = (props) => {
     return (
         <div className="container">
             <div className="row">
-                    <Breadcrumb>
-                        <BreadcrumbItem><Link to='/menu'>Menu</Link></BreadcrumbItem>
-                        <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
-                    </Breadcrumb>
                     <div className="col-12">
                         <h3>{props.dish.name}</h3>
                         <hr />
                     </div>
                 </div>
-                <div className="row"> 
-                    <div className="col-12 col-md-5 m-1"> 
-                        <RenderDish dish={props.dish} /> 
+                <div className="row align-items-stretch"> 
+                    <div className="col-12 col-md-6 d-flex"> 
+                        <RenderDish dish={dish} /> 
                     </div> 
-                    <div className="col-12 col-md-5 m-1"> 
+                    <div className="col-12 col-md-6 d-flex"> 
                         <RenderComments comments={props.comments} /> 
                     </div> 
                 </div>

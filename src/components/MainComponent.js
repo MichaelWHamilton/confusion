@@ -12,6 +12,7 @@ import { COMMENTS } from '../shared/comments';
 import { PROMOTIONS } from '../shared/promotions';
 import { LEADERS } from '../shared/leaders';
 
+
 class Main extends Component {
     constructor(props) {
         super(props);
@@ -39,12 +40,16 @@ class Main extends Component {
             );
         };
 
-        const DishWithId = ({match}) => {
-            return( 
-                <DishDetail dish={this.state.dishes.filter((dish) => dish.id === parseInt(match.params.dishId,10))[0]} 
-                comments={this.state.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))} /> 
+        const DishWithId = (props) => {
+            const dishId = parseInt(props.dishId, 10);
+            return (
+                <DishDetail 
+                    dish={props.dishes.find((dish) => dish.id === dishId)}
+                    comments={props.comments.filter((comment) => comment.dishId === dishId)}
+                />
             );
-        }
+        };
+        
         
 
         return(
@@ -53,8 +58,8 @@ class Main extends Component {
                 <Routes>
                     {/* routes replaces switch, and navigate replaces redirect, element replaces component */}
                     <Route path='/home' element={<HomePage/>} /> 
-                    <Route exact path='/menu' element={<Menu dishes={this.state.dishes} />} />
-                    <Route path='/menu:dishId' element={<DishWithId/>} />
+                    <Route exact path='/menu' element={<Menu dishes={this.state.dishes} comments={this.state.comments}/>} />
+                    <Route path='/menu/:dishId' element={<DishWithId dishes={this.state.dishes} comments={this.state.comments}/>} />
                     <Route exact path='/contactus' element={<Contact/>} />
                     <Route path="*" element={<Navigate to="/home" />} /> {/* Redirect unknown routes */} 
                 </Routes>
@@ -69,5 +74,6 @@ class Main extends Component {
         );
     }
 }
+
 
 export default Main;
