@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Navbar, NavbarBrand, Jumbotron } from 'reactstrap';
-
+import '../App.css';
 class Header extends Component{
     render(){
         return(
