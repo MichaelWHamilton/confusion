@@ -7,16 +7,19 @@ import { DISHES } from '../shared/dishes';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import Home from './HomeComponent';
-
-;
-
+import Contact from './ContactComponent';
+import { COMMENTS } from '../shared/comments';
+import { PROMOTIONS } from '../shared/promotions';
+import { LEADERS } from '../shared/leaders';
 
 class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
             dishes: DISHES,
-            selectedDish: null
+            comments: COMMENTS,
+            promotions: PROMOTIONS,
+            leaders: LEADERS
         };
     }
 
@@ -28,9 +31,13 @@ class Main extends Component {
 
         const HomePage = () => {
             return(
-                <Home />
+                <Home 
+                dish={this.state.dishes.filter((dish) => dish.featured)[0]} 
+                promotion={this.state.promotions.filter((promo) => promo.featured)[0]} 
+                leader={this.state.leaders.filter((leader) => leader.featured)[0]} 
+                /> 
             );
-        }
+        };
 
         
 
@@ -38,9 +45,10 @@ class Main extends Component {
             <div>
                 <Header/>
                 <Routes>
-                    {/* routes replaces switch, and navigate replaces redirect */}
-                    <Route path='/home' element={<Home/>} /> 
-                    <Route exactpath='/menu' element={<Menu dishes={this.state.dishes} />} /> 
+                    {/* routes replaces switch, and navigate replaces redirect, element replaces component */}
+                    <Route path='/home' element={<HomePage/>} /> 
+                    <Route exact path='/menu' element={<Menu dishes={this.state.dishes} />} />
+                    <Route exact path='/contactus' element={<Contact/>} />
                     <Route path="*" element={<Navigate to="/home" />} /> {/* Redirect unknown routes */} 
                 </Routes>
                 
