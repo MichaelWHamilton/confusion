@@ -1,6 +1,127 @@
-import React from 'react'; 
-import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import React, { Component } from 'react'; 
+import { Card, CardImg, CardText, CardBody, CardTitle, Button, Breadcrumb, BreadcrumbItem, Modal, ModalHeader, ModalBody, Form, Label, Input, FormGroup, Row, Col, FormFeedback } from 'reactstrap';
 import { Link } from 'react-router-dom';
+
+
+// Assignment 7 Comment Form Class
+class CommentForm extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isModalOpen: true,
+            rating: '',
+            author: '',
+            comment:'',
+            touched: {
+                rating: false,
+                author: false,
+                comment: false
+            }
+        }
+        this.toggleModal = this.toggleModal.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleBlur = this.handleBlur.bind(this);
+    }
+
+    handleBlur = (field) => (evt) => {
+        this.setState({
+            touched: {...this.state.touched, [field]: true}
+        });
+    }
+
+    validate(author) {
+        const errors = {
+            author: ''
+        };
+
+        if(this.state.touched.author && author.length < 3) {
+            errors.author = 'Must be greater than 2 characters';
+        }
+        else if (this.state.touched.author && author.length > 15) {
+            errors.author = 'Must not be greater than 15 characters';
+        }
+
+
+        return errors;
+    }
+
+    handleInputChange(event) {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+
+        this.setState({
+            [name]: value
+        });
+    }
+
+    toggleModal() {
+        console.log("Submit Comment clicked. Modal toggled");
+
+        this.setState({
+            isModalOpen: !this.state.isModalOpen
+        });
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        console.log("Rating: " + this.state.rating + " Author: " + this.state.author + " Comment: " + this.state.comment);
+        
+        alert("Rating: " + this.state.rating + " Author: " + this.state.author + " Comment: " + this.state.comment);
+        
+
+        this.toggleModal();
+    }
+
+    render() {
+        const errors = this.validate(this.state.author);
+        return (
+            <div className="container">
+                <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} fade={false}>
+                    <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
+                    <ModalBody>
+                        <Form onSubmit={this.handleSubmit}>
+                            <FormGroup select>
+                                <Label htmlFor="rating"/>
+                                <Input type="select" id="rating" name="rating" value={this.state.rating} onChange={this.handleInputChange}>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    Rating
+                                </Input>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label htmlFor="author">Your Name</Label>
+                                <Input 
+                                type="text" 
+                                id="author" 
+                                name="author"
+                                placeholder="Your Name" 
+                                value={this.state.author} 
+                                
+                                onBlur={this.handleBlur('author')}
+                                onChange={this.handleInputChange}
+                                />
+                                {this.state.touched.author && errors.author && (<div className="text-danger">{errors.author}</div>)}
+                                <FormFeedback>{errors.author}</FormFeedback>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label htmlFor="comment">Comment</Label>
+                                <Input type="textarea" id="comment" name="comment" rows="6" value={this.state.comment} onChange={this.handleInputChange}></Input>
+                            </FormGroup>
+                            <Button md={{size:10, offset:2}}type="submit" value="submit" color="primary" onClick={this.handleSubmit}>Submit</Button>
+                        </Form>
+                    </ModalBody>
+                </Modal>
+
+                <Button outline onClick={this.toggleModal}><span className="fa fa-pencil fa-lg"></span> Submit Comment</Button>
+            </div>
+        );
+    }
+}
+
+
 
 // RenderDish component - Displays the details of a single dish
 function RenderDish({ dish }) {
@@ -42,6 +163,7 @@ function RenderComments({ comments }) {
                         </li>
                     ))}
                 </ul>
+                <CommentForm/>
             </Card>
         </div>
     );
