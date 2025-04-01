@@ -13,16 +13,20 @@ import About from './AboutComponent';
 import { COMMENTS } from '../shared/comments';
 import { PROMOTIONS } from '../shared/promotions';
 import { LEADERS } from '../shared/leaders';
-
+import { addComment } from '../redux/ActionCreators';
 
 const mapStateToProps = (state) => {
     return{
         dishes: state.dishes,
-        commets: state.comments,
+        comments: state.comments,
         promotions: state.promotions,
         leaders: state.leaders
     }
 };
+
+const mapDispatchToProps = dispatch => ({
+    addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment))
+});
 
 
 class Main extends Component {
@@ -58,6 +62,7 @@ class Main extends Component {
                 <DishDetail 
                     dish={props.dishes.find((dish) => dish.id === dishId)}
                     comments={props.comments.filter((comment) => comment.dishId === dishId)}
+                    addComment={this.props.addComment}
                 />
             );
         };
@@ -71,8 +76,8 @@ class Main extends Component {
                     {/* routes replaces switch, and navigate replaces redirect, element replaces component */}
                     <Route path='/home' element={<HomePage/>} />
                     <Route exact path='/aboutus' element={<About leaders={this.props.leaders} /> } />
-                    <Route exact path='/menu' element={<Menu dishes={this.state.dishes} comments={this.state.comments}/>} />
-                    <Route path='/menu/:dishId' element={<DishWithId dishes={this.state.dishes} comments={this.state.comments}/>} />
+                    <Route exact path='/menu' element={<Menu dishes={this.state.dishes} comments={this.props.comments} addComment={this.props.addComment}/>} />
+                    <Route path='/menu/:dishId' element={<DishWithId dishes={this.state.dishes} comments={this.props.comments}/>} />
                     <Route exact path='/contactus' element={<Contact/>} />
                     <Route path="*" element={<Navigate to="/home" replace/>} /> {/* Redirect unknown routes */} 
                 </Routes>
@@ -89,4 +94,4 @@ class Main extends Component {
 }
 
 
-export default connect(mapStateToProps)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

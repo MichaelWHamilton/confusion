@@ -8,7 +8,7 @@ class CommentForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isModalOpen: true,
+            isModalOpen: false,
             rating: '',
             author: '',
             comment:'',
@@ -70,26 +70,50 @@ class CommentForm extends Component {
         
         alert("Rating: " + this.state.rating + " Author: " + this.state.author + " Comment: " + this.state.comment);
         
+        console.log("Submitting comment with:");
+        console.log("Dish ID:", this.props.dishId);
+        console.log("Rating:", this.state.rating);
+        console.log("Author:", this.state.author);
+        console.log("Comment:", this.state.comment);
+        console.log("Props available:", this.props);
+
+        // Dispatch the Redux action to add the comment
+        this.props.addComment(this.props.dishId, this.state.rating, this.state.author, this.state.comment);
+
+        // Reset form (optional)
+        this.setState({
+            rating: '',
+            author: '',
+            comment: '',
+            touched: {
+                rating: false,
+                author: false,
+                comment: false
+            }
+        });
 
         this.toggleModal();
     }
 
     render() {
         const errors = this.validate(this.state.author);
+
+        console.log("CommentForm props:", this.props);
+        
         return (
             <div className="container">
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} fade={false}>
                     <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
                     <ModalBody>
                         <Form onSubmit={this.handleSubmit}>
-                            <FormGroup select>
+                            <FormGroup>
                                 <Label htmlFor="rating"/>
-                                <Input type="select" id="rating" name="rating" value={this.state.rating} onChange={this.handleInputChange}>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    Rating
-                                </Input>
+                                    <Input type="select" id="rating" name="rating" value={this.state.rating} onChange={this.handleInputChange}>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        Rating
+                                    </Input>
                             </FormGroup>
                             <FormGroup>
                                 <Label htmlFor="author">Your Name</Label>
@@ -144,7 +168,7 @@ function RenderDish({ dish }) {
 }
 
 // RenderComments component - Displays the comments for a dish
-function RenderComments({ comments }) {
+function RenderComments({ comments, addComment, dishId }) {
     if (!comments || comments.length === 0) {  // Check if comments exist
         return <div><h4>Comments</h4><p>No comments available.</p></div>;
     }
@@ -163,7 +187,7 @@ function RenderComments({ comments }) {
                         </li>
                     ))}
                 </ul>
-                <CommentForm/>
+                <CommentForm dishId={dishId} addComment={addComment} />
             </Card>
         </div>
     );
@@ -191,7 +215,7 @@ const DishDetail = (props) => {
                         <RenderDish dish={dish} /> 
                     </div> 
                     <div className="col-12 col-md-6 d-flex"> 
-                        <RenderComments comments={props.comments} /> 
+                        <RenderComments comments={props.comments} dishId={props.dish.id} addComment={props.addComment} /> 
                     </div> 
                 </div>
         </div>

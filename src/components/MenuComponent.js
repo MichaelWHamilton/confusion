@@ -68,7 +68,8 @@ import DishDetail from './DishdetailComponent';
 
                         <DishDetail 
                             dish={selectedDish} 
-                            comments={props.comments ? props.comments.filter(comment => comment.dishId === selectedDish.id) : []} 
+                            comments={props.comments.filter(comment => comment.dishId === selectedDish.id)} 
+                            addComment={props.addComment}
                         />
                     </div>
                 )}
