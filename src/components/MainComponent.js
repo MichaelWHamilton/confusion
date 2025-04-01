@@ -1,6 +1,7 @@
 import React, { Component } from 'react'; 
 import { Navbar, NavbarBrand } from 'reactstrap';
-import {Routes, Route, Navigate } from 'react-router-dom'
+import {Routes, Route, Navigate, Switch, redirect, withRouter} from 'react-router-dom';
+import { connect } from 'react-redux';
 import Menu from './MenuComponent'; 
 import DishDetail from './DishdetailComponent'; 
 import { DISHES } from '../shared/dishes';
@@ -8,9 +9,20 @@ import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import Home from './HomeComponent';
 import Contact from './ContactComponent';
+import About from './AboutComponent';
 import { COMMENTS } from '../shared/comments';
 import { PROMOTIONS } from '../shared/promotions';
 import { LEADERS } from '../shared/leaders';
+
+
+const mapStateToProps = (state) => {
+    return{
+        dishes: state.dishes,
+        commets: state.comments,
+        promotions: state.promotions,
+        leaders: state.leaders
+    }
+};
 
 
 class Main extends Component {
@@ -57,11 +69,12 @@ class Main extends Component {
                 <Header/>
                 <Routes>
                     {/* routes replaces switch, and navigate replaces redirect, element replaces component */}
-                    <Route path='/home' element={<HomePage/>} /> 
+                    <Route path='/home' element={<HomePage/>} />
+                    <Route exact path='/aboutus' element={<About leaders={this.props.leaders} /> } />
                     <Route exact path='/menu' element={<Menu dishes={this.state.dishes} comments={this.state.comments}/>} />
                     <Route path='/menu/:dishId' element={<DishWithId dishes={this.state.dishes} comments={this.state.comments}/>} />
                     <Route exact path='/contactus' element={<Contact/>} />
-                    <Route path="*" element={<Navigate to="/home" />} /> {/* Redirect unknown routes */} 
+                    <Route path="*" element={<Navigate to="/home" replace/>} /> {/* Redirect unknown routes */} 
                 </Routes>
                 
                 <Footer/>
@@ -76,4 +89,4 @@ class Main extends Component {
 }
 
 
-export default Main;
+export default connect(mapStateToProps)(Main);
