@@ -15,9 +15,10 @@
   padding: 20px 0px 20px 0px;
 }
 
-.jumbotron{
+.custom-jumbotron{
   padding:70px 30px 70px 30px;
-  margin:0px auto;
+  margin:auto;
+  width: 100vw;
   background: #9575CD;
   color: floralwhite;
 }

@@ -12,24 +12,19 @@ import Main from './components/MainComponent';
 const store = ConfigureStore();
 
 class App extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      dishes: DISHES
-    };
-  }
+ 
 
   render() { 
     return ( 
       <Provider store={store}>
         <BrowserRouter>
-          <div className="App"> 
+          <div> 
             <Main />
           </div> 
         </BrowserRouter>
       </Provider>
       
-    ); 
+    )
   } 
 }
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'; 
 import { Card, CardImg, CardText, CardBody, CardTitle, Button, Breadcrumb, BreadcrumbItem, Modal, ModalHeader, ModalBody, Form, Label, Input, FormGroup, Row, Col, FormFeedback } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
 
 // Assignment 7 Comment Form Class
@@ -8,52 +9,10 @@ class CommentForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isModalOpen: false,
-            rating: '',
-            author: '',
-            comment:'',
-            touched: {
-                rating: false,
-                author: false,
-                comment: false
-            }
+            isModalOpen: false
         }
         this.toggleModal = this.toggleModal.bind(this);
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleBlur = this.handleBlur.bind(this);
-    }
-
-    handleBlur = (field) => (evt) => {
-        this.setState({
-            touched: {...this.state.touched, [field]: true}
-        });
-    }
-
-    validate(author) {
-        const errors = {
-            author: ''
-        };
-
-        if(this.state.touched.author && author.length < 3) {
-            errors.author = 'Must be greater than 2 characters';
-        }
-        else if (this.state.touched.author && author.length > 15) {
-            errors.author = 'Must not be greater than 15 characters';
-        }
-
-
-        return errors;
-    }
-
-    handleInputChange(event) {
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
-
-        this.setState({
-            [name]: value
-        });
+        this.handleSubmit = this.handleSubmit.bind(this);        
     }
 
     toggleModal() {
@@ -64,35 +23,29 @@ class CommentForm extends Component {
         });
     }
 
-    handleSubmit(event) {
-        event.preventDefault();
-        console.log("Rating: " + this.state.rating + " Author: " + this.state.author + " Comment: " + this.state.comment);
+    handleSubmit(value) {
+        //value.preventDefault();
+        console.log("Rating: " + value.rating + " Author: " + value.author + " Comment: " + value.comment);
         
-        alert("Rating: " + this.state.rating + " Author: " + this.state.author + " Comment: " + this.state.comment);
+        alert("Rating: " + value.rating + " Author: " + value.author + " Comment: " + value.comment);
         
         console.log("Submitting comment with:");
         console.log("Dish ID:", this.props.dishId);
-        console.log("Rating:", this.state.rating);
-        console.log("Author:", this.state.author);
-        console.log("Comment:", this.state.comment);
-        console.log("Props available:", this.props);
+        console.log("Rating:", value.rating);
+        console.log("Author:", value.author);
+        console.log("Comment:", value.props);
 
         // Dispatch the Redux action to add the comment
-        this.props.addComment(this.props.dishId, this.state.rating, this.state.author, this.state.comment);
+        this.props.addComment(this.props.dishId, value.rating, value.author, value.comment);
 
         // Reset form (optional)
-        this.setState({
-            rating: '',
-            author: '',
-            comment: '',
-            touched: {
-                rating: false,
-                author: false,
-                comment: false
-            }
-        });
+        // this.setState({
+        //     rating: '',
+        //     author: '',
+        //     comment: ''
+        // });
 
-        this.toggleModal();
+        //this.toggleModal();
     }
 
     render() {
