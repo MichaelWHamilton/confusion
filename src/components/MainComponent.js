@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Navbar, NavbarBrand } from 'reactstrap';
 import {Routes, Route, Navigate, Switch, redirect, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
-import { actions } from 'react-redux-form';
 import Menu from './MenuComponent'; 
 import DishDetail from './DishdetailComponent'; 
 import { DISHES } from '../shared/dishes';
@@ -28,8 +27,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
     addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
-    fetchDishes: () => {dispatch(fetchDishes())},
-    resetFeedbackForm: () =>  {dispatch(actions.reset('feedback'))}
+    fetchDishes: () => {dispatch(fetchDishes())}
+    //resetFeedbackForm: () =>  {dispatch(actions.reset('feedback'))}
 });
 
 
