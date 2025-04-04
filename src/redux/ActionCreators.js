@@ -42,7 +42,8 @@ export const postComment = (dishId, rating, author, comment) => (dispatch) => {
    .then(response => response.json())
    .then(response => dispatch(addComment(response)))
    .catch(error => { console.log('Post comments ', error.message);
-   alert('Your comment could not be posted\nError: ' + error.message); })
+      alert('Your comment could not be posted\nError: ' + error.message); 
+   })
 }
 
 export const postFeedback = (feedback) => (dispatch) => {
@@ -79,10 +80,24 @@ export const postFeedback = (feedback) => (dispatch) => {
       throw errmess;
    })
    .then(response => response.json())
-   .then(response => { console.log("Current State is: " + JSON.stringify(response)); 
-                       alert("Thank you for your feedback!<br/>" + JSON.stringify(response)); })
+   .then(response => { 
+      console.log("Current State is: " + JSON.stringify(response)); 
+
+      const feedbackMessage = 
+         "Thank you for your feedback!!!\n\n" +
+         `First Name: ${response.firstname}\n` +
+         `Last Name: ${response.lastname}\n` +
+         `Tel. Number: ${response.telnum}\n` +
+         `Email: ${response.email}\n` +
+         `Agree: ${response.agree}\n` +
+         `Contact Type: ${response.contactType}\n` +
+         `Message: ${response.message}`;
+
+      alert(feedbackMessage); 
+   })
    .catch(error => { console.log('Post comments ', error.message);
-                     alert('Your feedback could not be posted\nError: ' + error.message); })
+      alert('Your feedback could not be posted\nError: ' + error.message); 
+   })
 }
 
 export const fetchDishes = () => (dispatch) => {
