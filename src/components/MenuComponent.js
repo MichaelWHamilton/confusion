@@ -15,8 +15,8 @@ function RenderMenuItem({ dish }) {
             </Link>
         </Card>
     );
-
 }
+
 const Menu = (props) => {
     const menu = props.dishes.dishes.map((dish) => {
         return (
@@ -65,8 +65,5 @@ const Menu = (props) => {
         );
     }
 };
-
-        
- 
 
 export default Menu;

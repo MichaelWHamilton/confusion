@@ -33,17 +33,16 @@ class CommentForm extends Component {
     alert("Values:" + "\ndishid: " + this.props.dishId + "\nrating: " + values.rating + "\nauthor: " + values.author + "\ncomments: " + values.comment);
     this.toggleModal();
     this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
-
+    // For debuggin purposes
     console.log("Values:" + "\ndishid: " + this.props.dishId + "\nrating: " + values.rating + "\nauthor: " + values.author + "\ncomments: " + values.comment);
   }
   
-
   render() {
     return (
       <div className="container">
         <div className="row">
           <Button outline onClick={this.toggleModal}>
-          <span className="fa fa-pencil fa-lg"></span> Submit Comment
+            <span className="fa fa-pencil fa-lg"></span> Submit Comment
           </Button>
                 
           <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
@@ -126,18 +125,18 @@ function RenderComments({comments, postComment, dishId}) {
   if (comments != null) {
     return (
       <div className="col-12 col-md-5 m-1">
-      <h4>Comments</h4>
-      <ul className="list-unstyled">
-        {comments.map((comment) => {
-          return (
-            <li key={comment.id}>
-              <p>{comment.comment}</p>
-              <p>-- {comment.author} , {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</p>									   
-            </li>
-          );
-        })}
-      </ul>
-      <CommentForm dishId={dishId} postComment={postComment} />
+        <h4>Comments</h4>
+        <ul className="list-unstyled">
+          {comments.map((comment) => {
+            return (
+              <li key={comment.id}>
+                <p>{comment.comment}</p>
+                <p>-- {comment.author} , {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</p>									   
+              </li>
+            );
+          })}
+        </ul>
+        <CommentForm dishId={dishId} postComment={postComment} />
       </div>
     );
   }
