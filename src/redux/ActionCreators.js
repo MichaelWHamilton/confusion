@@ -123,20 +123,24 @@ export const fetchDishes = () => (dispatch) => {
    .catch(error => dispatch(dishesFailed(error.message)));
 }
 
+// Dishes loading
 export const dishesLoading = () => ({
    type: ActionTypes.DISHES_LOADING
 });
 
+// Dishes failed
 export const dishesFailed = (errmess) => ({
    type: ActionTypes.DISHES_FAILED,
    payload: errmess
 });
 
+// Add dishes
 export const addDishes = (dishes) => ({
    type: ActionTypes.ADD_DISHES,
    payload: dishes
 })
 
+// Get comments for dishes
 export const fetchComments = () => (dispatch) => {   
    return fetch(baseUrl + 'comments')
    .then(response => {
@@ -158,16 +162,19 @@ export const fetchComments = () => (dispatch) => {
    .catch(error => dispatch(commentsFailed(error.message)));
 }
 
+// Failed to get comments
 export const commentsFailed = (errmess) => ({
    type: ActionTypes.COMMENTS_FAILED,
    payload: errmess
 });
 
+// Add comments for dishes
 export const addComments = (comments) => ({
    type: ActionTypes.ADD_COMMENTS,
    payload: comments
 })
 
+// Get promotions
 export const fetchPromos = () => (dispatch) => {
    dispatch(promosLoading(true));
    
@@ -191,20 +198,24 @@ export const fetchPromos = () => (dispatch) => {
    .catch(error => dispatch(promosFailed(error.message)));
 }
 
+// Promos are loading
 export const promosLoading = () => ({
    type: ActionTypes.PROMOS_LOADING
 });
 
+// Promos failed to load
 export const promosFailed = (errmess) => ({
    type: ActionTypes.PROMOS_FAILED,
    payload: errmess
 });
 
+// Add promos 
 export const addPromos = (promos) => ({
    type: ActionTypes.ADD_PROMOS,
    payload: promos
 })
 
+// Get the leaders
 export const fetchLeaders = () => (dispatch) => {
    dispatch(leadersLoading(true));
    
@@ -228,15 +239,18 @@ export const fetchLeaders = () => (dispatch) => {
    .catch(error => dispatch(leadersFailed(error.message)));
 }
 
+// Leaders are loading
 export const leadersLoading = () => ({
    type: ActionTypes.LEADERS_LOADING
 });
 
+// Leaders failed to load
 export const leadersFailed = (errmess) => ({
    type: ActionTypes.LEADERS_FAILED,
    payload: errmess
 });
 
+// Add leaders
 export const addLeaders = (leaders) => ({
    type: ActionTypes.ADD_LEADERS,
    payload: leaders
