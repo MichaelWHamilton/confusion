@@ -3,6 +3,8 @@ import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle } from 'reac
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
 
+
+// Render card now checks if something isLoading, if error mess has been sent, else loads the cards for dishes like normal
 function RenderCard({item, isLoading, errMess}) {
    if (isLoading) {
       return(
@@ -28,6 +30,8 @@ function RenderCard({item, isLoading, errMess}) {
    }
 }
 
+
+// Home now passes the same error checks to the next level incase an individual card fails for some reason
 function Home(props) {
     return (
       <div className="container">

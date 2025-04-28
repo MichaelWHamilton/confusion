@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import { postComment, postFeedback, fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
 import { actions } from 'react-redux-form';
 
+
 const mapStateToProps = state => {
 
    return {
@@ -31,11 +32,15 @@ const mapDispatchToProps = (dispatch) => ({
    fetchLeaders: () => {dispatch(fetchLeaders())}
 });
     
+
+
 class Main extends Component {
+   
    constructor(props) {
       super(props);
    }
    
+
    componentDidMount() {
       this.props.fetchDishes();
       this.props.fetchComments();
@@ -43,6 +48,7 @@ class Main extends Component {
       this.props.fetchLeaders();
    }
    
+
    render() {
       const HomePage = () => {
          return (
@@ -63,6 +69,8 @@ class Main extends Component {
          );
       }
    
+
+      // Routes for linkes to different pages within the project
       return (
          <div>
             <Header/>

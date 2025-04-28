@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Loading } from "./LoadingComponent";
 import { baseUrl } from "../shared/baseUrl";
 
+
 function RenderMenuItem({ dish }) {
     return(
         <Card>
@@ -17,7 +18,9 @@ function RenderMenuItem({ dish }) {
     );
 }
 
+
 const Menu = (props) => {
+    
     const menu = props.dishes.dishes.map((dish) => {
         return (
             <div key={dish.id} className="col-12 col-md-5 m-1">
@@ -25,6 +28,7 @@ const Menu = (props) => {
             </div>
         );
     });
+
     if (props.dishes.isLoading) {
         return(
             <div className="container">

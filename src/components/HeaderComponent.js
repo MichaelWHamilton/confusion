@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarBrand, Nav, NavbarToggler,Collapse,NavItem, Jumbotron, Button, Modal, ModalHeader, ModalBody, Label, Input, FormGroup, Form } from 'reactstrap';
+import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse ,NavItem, Jumbotron, Button, Modal, ModalHeader, ModalBody, Label, Input, FormGroup, Form } from 'reactstrap';
 import {NavLink} from 'react-router-dom';
+
+
 
 class Header extends Component{
 
@@ -15,22 +17,28 @@ class Header extends Component{
         this.handleLogin = this.handleLogin.bind(this);
     }
 
+    // Toglgle nav state
     toggleNav() {
         this.setState({
              isNavOpen: !this.state.isNavOpen
         });
     }
+
+    // Toggle modal state
     toggleModal(){
         this.setState({
             isModalOpen: !this.state.isModalOpen
        });
     }
+
+    // Method fo rhandliong the login
     handleLogin(event){
         this.toggleModal();
         alert("Username: "+this.username.value+"Password: "+this.password.value+"Remember: "+this.remember.checked)
         event.preventDefault();
     }
 
+    // Header and Nav for different pages
     render(){
         return(
            <div>

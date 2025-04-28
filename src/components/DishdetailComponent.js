@@ -6,9 +6,11 @@ import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
 
 
+
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => (val) && (val.length >= len);
+
 
 class CommentForm extends Component {
    
@@ -23,12 +25,12 @@ class CommentForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   
-
+  // Method for toggling modal
   toggleModal() {
     this.setState({ isModalOpen: !this.state.isModalOpen });
   }
   
-
+  // Take data from modal and add a new dish comment and rating
   handleSubmit(values) {
     alert("Values:" + "\ndishid: " + this.props.dishId + "\nrating: " + values.rating + "\nauthor: " + values.author + "\ncomments: " + values.comment);
     this.toggleModal();
@@ -107,6 +109,7 @@ class CommentForm extends Component {
   }
 }
 
+// Render the dishes
 function RenderDish({dish}) {
   return (
     <div className="col-12 col-md-5 m-1">
@@ -121,6 +124,7 @@ function RenderDish({dish}) {
   );
 }
 
+// Render comments for dishes. If the comment is null return an empty container
 function RenderComments({comments, postComment, dishId}) {
   if (comments != null) {
     return (
@@ -147,6 +151,7 @@ function RenderComments({comments, postComment, dishId}) {
   }
 }
 
+// Check if Dish Detail is loading, if error, if has loaded, or if it fails then return empty container
 const Dishdetail = (props) => {
   if (props.isLoading) {
     return(

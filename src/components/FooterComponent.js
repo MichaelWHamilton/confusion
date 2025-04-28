@@ -1,6 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+
+
+//Footer stuff
+
 function Footer(props){
     return(
         <div className="footer">

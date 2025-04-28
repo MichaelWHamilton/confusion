@@ -3,6 +3,7 @@ import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'r
 import { Link } from 'react-router-dom';
 import { baseUrl } from '../shared/baseUrl';
 
+
 //Render leaders on page
 function RenderLeader({leader}) {
   return (
@@ -20,6 +21,7 @@ function RenderLeader({leader}) {
     </div>
   );
 }
+
 
 // About section for leaders
 function About(props) {
